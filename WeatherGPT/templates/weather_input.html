@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherGPT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="command-line" id="command-line">
+        <div class="input-line">
+            <span>Enter your Location:</span>
+        </div>
+        <div class="input-line">
+            <span>>></span>
+            <input type="text" id="location-input" autofocus
+                style="background: none; border: none; color: #0f0; outline: none; font-family: 'Consolas', monospace;">
+        </div>
+        <div id="recommendations" class="recommendations"></div>
+        <div class="loading" id="loading">
+            <span>Loading</span><span class="blink">.</span><span class="blink">.</span><span class="blink">.</span>
+        </div>
+    </div>
+    <script>
+        document.getElementById('location-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const location = e.target.value.trim();
+                if (location.toLowerCase() === 'quit()') {
+                    document.body.classList.add('slide-up');
+                    setTimeout(function () {
+                        window.location.href = '/closing';
+                    }, 1000);
+                    return;
+                }
+                document.getElementById('loading').style.display = 'block';
+                fetch('/weather', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ location: location })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('loading').style.display = 'none';
+                        const recommendationsElement = document.getElementById('recommendations');
+                        recommendationsElement.innerHTML += `\nLocation: ${location}\n`;
+                        typeWriter(data.recommendations, recommendationsElement);
+                    });
+            }
+        });
+
+        function typeWriter(text, element) {
+            let i = 0;
+            function typing() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, 50);
+                } else {
+                    element.innerHTML += '\n';
+                    addNewInputLine();
+                }
+            }
+            typing();
+        }
+
+        function addNewInputLine() {
+            const commandLine = document.getElementById('command-line');
+            const newInputLine = document.createElement('div');
+            newInputLine.className = 'input-line';
+            newInputLine.innerHTML = '<span>>></span><input type="text" class="location-input" autofocus style="background: none; border: none; color: #0f0; outline: none; font-family: \'Consolas\', monospace;">';
+            commandLine.appendChild(newInputLine);
+            const newInput = newInputLine.querySelector('.location-input');
+            newInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    const location = e.target.value.trim();
+                    if (location.toLowerCase() === 'quit()') {
+                        document.body.classList.add('slide-up');
+                        setTimeout(function () {
+                            window.location.href = '/closing';
+                        }, 1000);
+                        return;
+                    }
+                    document.getElementById('loading').style.display = 'block';
+                    fetch('/weather', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ location: location })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('loading').style.display = 'none';
+                            const recommendationsElement = document.getElementById('recommendations');
+                            recommendationsElement.innerHTML += `\nLocation: ${location}\n`;
+                            typeWriter(data.recommendations, recommendationsElement);
+                        });
+                }
+            });
+            newInput.focus();
+        }
+    </script>
+</body>
+
+</html>

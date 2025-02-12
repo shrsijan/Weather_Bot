@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherGPT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="command-line">
+        <h1>Thank you for using WeatherGPT!</h1>
+        <p>Click anywhere to start a new session...</p>
+        <p class="blink">_</p>
+    </div>
+    <script>
+        document.body.addEventListener('click', function () {
+            document.body.classList.add('slide-up');
+            setTimeout(function () {
+                window.location.href = '/weather';
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

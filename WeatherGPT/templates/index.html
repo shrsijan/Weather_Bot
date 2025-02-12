@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherGPT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1>Weather Advisory</h1>
+    <form id="weather-form" method="POST" class="form-container">
+        <label for="location">Enter location (e.g., 'Arlington,VA,US' or 'London,UK'):</label>
+        <input type="text" id="location" name="location" required>
+        <button type="submit">Get Weather</button>
+        <div class="spinner" id="loading-spinner"></div>
+    </form>
+    <div id="weather-info">
+        {% if weather_info %}
+        <h2>Weather Information:</h2>
+        <p>Description: {{ weather_info.description }}</p>
+        <p>Temperature: {{ weather_info.temperature }}°C</p>
+        <p>Feels Like: {{ weather_info.feels_like }}°C</p>
+        <p>Humidity: {{ weather_info.humidity }}%</p>
+        <p>Wind Speed: {{ weather_info.wind_speed }} m/s</p>
+        <p>Timestamp: {{ weather_info.timestamp }}</p>
+        {% endif %}
+    </div>
+    <div id="recommendations">
+        {% if recommendations %}
+        <h2>Recommendations:</h2>
+        <div id="recommendations-content">{{ recommendations|safe }}</div>
+        {% endif %}
+    </div>
+    <script>
+        document.getElementById('weather-form').addEventListener('submit', function () {
+            document.getElementById('loading-spinner').style.display = 'block';
+        });
+    </script>
+</body>
+
+</html>
