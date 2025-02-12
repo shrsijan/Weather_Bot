@@ -45,8 +45,10 @@
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('loading').style.display = 'none';
-                        const recommendationsElement = document.getElementById('recommendations');
-                        recommendationsElement.innerHTML += `\nLocation: ${location}\n`;
+                        const recommendationsElement = document.createElement('div');
+                        recommendationsElement.className = 'recommendations';
+                        recommendationsElement.innerHTML = `\nLocation: ${location}\n`;
+                        e.target.parentElement.insertAdjacentElement('afterend', recommendationsElement);
                         typeWriter(data.recommendations, recommendationsElement);
                     });
             }
@@ -95,8 +97,10 @@
                         .then(response => response.json())
                         .then(data => {
                             document.getElementById('loading').style.display = 'none';
-                            const recommendationsElement = document.getElementById('recommendations');
-                            recommendationsElement.innerHTML += `\nLocation: ${location}\n`;
+                            const recommendationsElement = document.createElement('div');
+                            recommendationsElement.className = 'recommendations';
+                            recommendationsElement.innerHTML = `\nLocation: ${location}\n`;
+                            e.target.parentElement.insertAdjacentElement('afterend', recommendationsElement);
                             typeWriter(data.recommendations, recommendationsElement);
                         });
                 }
