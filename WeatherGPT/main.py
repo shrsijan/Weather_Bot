@@ -31,8 +31,7 @@ Be diverse in suggestions (e.g., recreational activities, work-from-home adjustm
 Ensure the response is concise, well-structured, and easy to read. Avoid redundancy and maintain a professional yet approachable tone."""
     
     try:
-        # Get response from Deepseek model
-        response = ollama.chat(model="llama3", messages=[
+        response = ollama.chat(model="gemma:7b", messages=[
             {
                 "role": "user",
                 "content": prompt
@@ -66,13 +65,17 @@ def weather():
             recommendations = get_llm_recommendations(weather_info)
             return jsonify({'recommendations': recommendations})
         else:
-            return jsonify({'error': weather_info})
+            return jsonify({'error': "location not found"})
     
     return render_template('weather_input.html')
 
 @app.route('/closing')
 def closing():
     return render_template('closing.html')
+
+@app.route('/help')
+def help():
+    return render_template('help.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

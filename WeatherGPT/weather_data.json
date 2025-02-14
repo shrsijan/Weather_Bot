@@ -1,8 +1,8 @@
 {
-    "temperature": -1.73,
-    "feels_like": -5.15,
-    "humidity": 92,
-    "description": "snow",
-    "wind_speed": 2.57,
-    "timestamp": "2025-02-11 22:12:13"
+    "temperature": 10.12,
+    "feels_like": 9.3,
+    "humidity": 81,
+    "description": "mist",
+    "wind_speed": 1.03,
+    "timestamp": "2025-02-14 15:49:33"
 }

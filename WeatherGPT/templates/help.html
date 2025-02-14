@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherGPT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="command-line">
+        <h1>Commands to use</h1>
+        <p>Enter your location to get the weather (full location prefered)</p>
+        <p>Type <b>quit()</b> to end the session</p>
+        <p>Type <b>/help</b> to see this message again</p>
+        <p>Click <u>here</u> to start a new session...</p>
+    </div>
+    <script>
+        document.body.addEventListener('click', function () {
+            document.body.classList.add('slide-up');
+            setTimeout(function () {
+                window.location.href = '/weather';
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

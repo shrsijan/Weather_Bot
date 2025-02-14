@@ -34,6 +34,13 @@
                     }, 1000);
                     return;
                 }
+                if (location.toLowerCase() === '/help') {
+                    document.body.classList.add('slide-up');
+                    setTimeout(function () {
+                        window.location.href = '/help';
+                    }, 1000);
+                    return;
+                }
                 document.getElementById('loading').style.display = 'block';
                 fetch('/weather', {
                     method: 'POST',
