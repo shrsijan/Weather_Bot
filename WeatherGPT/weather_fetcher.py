@@ -45,7 +45,7 @@ def get_weather(location):
     
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 401:
-            return "Error: Invalid API key. Please check your API key in the .env file"
+            return "Error: Invalid API key"
         elif e.response.status_code == 404:
             return f"Error: Location '{location}' not found"
         else:

@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import json
 import ollama
-import markdown 
 from weather_fetcher import get_weather
 
 app = Flask(__name__)
